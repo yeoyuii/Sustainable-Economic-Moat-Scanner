@@ -1,0 +1,10 @@
+import yfinance as yf
+import pandas as pd 
+
+ticker_symbol = "AAPL"
+
+ticker = yf.Ticker(ticker_symbol)
+
+income_statement = ticker.income_stmt
+
+print(income_statement)
