@@ -1,1 +1,1 @@
-Currently fetchs financial data from Yahoo Finance
+Currently fetches financial data from Yahoo Finance
