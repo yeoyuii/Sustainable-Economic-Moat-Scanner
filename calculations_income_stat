@@ -1,10 +1,16 @@
 import yfinance as yf
-import pandas as pd 
 
-ticker_symbol = "AAPL"
 
-ticker = yf.Ticker(ticker_symbol)
+ticker = yf.Ticker("AAPL")
+income_stmt = ticker.get_income_stmt() 
 
-income_statement = ticker.income_stmt
+operating_income = income_stmt.loc['OperatingIncome']
 
-print(income_statement)
+# iloc[1] = Most recent period (TTM for annual, latest quarter for quarterly)
+most_recent_op_income = operating_income.iloc[0]
+tax_expense = income_stmt.loc['TaxProvision'].iloc[0]
+pretax_income = income_stmt.loc['PretaxIncome'].iloc[0]
+
+effective_tax_rate = tax_expense / pretax_income
+
+print(effective_tax_rate)
