@@ -6,7 +6,7 @@ income_stmt = ticker.get_income_stmt()
 
 operating_income = income_stmt.loc['OperatingIncome']
 
-# iloc[1] = Most recent period (TTM for annual, latest quarter for quarterly)
+# iloc[0] = Most recent period (TTM for annual, latest quarter for quarterly)
 most_recent_op_income = operating_income.iloc[0]
 tax_expense = income_stmt.loc['TaxProvision'].iloc[0]
 pretax_income = income_stmt.loc['PretaxIncome'].iloc[0]
@@ -14,3 +14,9 @@ pretax_income = income_stmt.loc['PretaxIncome'].iloc[0]
 effective_tax_rate = tax_expense / pretax_income
 
 print(effective_tax_rate)
+
+getting_EBIT = income_stmt.loc['EBIT']
+calc_EBIT = income_stmt.loc['EBIT'].iloc[0]
+calc_NOPAT = calc_EBIT * (1 - effective_tax_rate)
+
+print(calc_NOPAT)
