@@ -1,0 +1,15 @@
+class MoatScorer:
+    def __init__(self):
+        self.score = {}
+
+    def score_sustainable():
+        '''
+        Docstring for score_sustainable
+        '''
+        pass
+
+    def score_longterm_return():
+        '''
+        Docstring for score_longterm_return
+        '''
+        pass
