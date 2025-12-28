@@ -2,28 +2,28 @@ import pandas as pd
 import yfinance as yf
 
 class data_collector():
-    def __init__(self, ticker):
+    def __init__(self, ticker: str):
         self.ticker = ticker
-        self.income_stmt = self.ticker.get_income_stmt()
+        stock = yf.Ticker(self.ticker)
+        self.income_stmt = stock.get_income_stmt() 
         self.effective_tax_rate = 0
+        self.info = stock.info
 
-    def data_collector(self, ticker):
+    def data_collector(self) -> None:
         '''
         Retreiving stock information and returning selective data
         '''
-        stock = yf.Ticker(self.ticker)
-        info = stock.info
 
         # Storing information into a dictionary
         data = {
-            'Stock' : info.get('longName', ticker),
-            'Price' : info.get('currentPrice', 0),
-            'Market_cap' : info.get('marketCap', 0)
+            'Stock' : self.info.get('longName', self.ticker),
+            'Price' : self.info.get('currentPrice', 0),
+            'Market_cap' : self.info.get('marketCap', 0)
         }
 
         return data 
     
-    def calculate_TaxRate(self):
+    def calculate_TaxRate(self) -> None:
         '''
         Docstring for calculate_TaxRate
         Tax Rate = Tax provision/pretax income
@@ -41,7 +41,7 @@ class data_collector():
         return self.effective_tax_rate
 
 
-    def calculate_NOPAT(self):
+    def calculate_NOPAT(self) -> None:
         '''
         Docstring for calculate_NOPAT
         NOPAT stands for Net Operating Profit After Tax
@@ -51,11 +51,20 @@ class data_collector():
         calc_EBIT = self.income_stmt.loc['EBIT'].iloc[0]
         calc_NOPAT = calc_EBIT * (1 - self.effective_tax_rate)
         return calc_NOPAT
+    
+    def calculate_ROIC(self) -> None:
+        '''
+        Docstring for calculate_ROIC
+        Return on invested Capital (ROIC) = NOPAT / average invested capital
+        '''
+        pass
 
 
 
 aapl_data = data_collector("AAPL")
 print(aapl_data)
 
+
 apple = yf.Ticker('AAPL')
 print(apple.info)
+print(aapl_data.calculate_NOPAT())
