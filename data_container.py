@@ -23,7 +23,7 @@ class data_collector():
 
         return data 
     
-    def calculate_TaxRate(self) -> None:
+    def calculate_TaxRate(self) -> float:
         '''
         Docstring for calculate_TaxRate
         Tax Rate = Tax provision/pretax income
@@ -41,7 +41,7 @@ class data_collector():
         return self.effective_tax_rate
 
 
-    def calculate_NOPAT(self) -> None:
+    def calculate_NOPAT(self) -> float:
         '''
         Docstring for calculate_NOPAT
         NOPAT stands for Net Operating Profit After Tax
@@ -52,7 +52,19 @@ class data_collector():
         calc_NOPAT = calc_EBIT * (1 - self.effective_tax_rate)
         return calc_NOPAT
     
-    def calculate_ROIC(self) -> None:
+    def calculate_avrg_invested_cap(self) -> float:
+        '''
+        Docstring for calculate_avrg_invested_cap
+        Returns Average Invested Capital as a float
+        '''
+        current_ic = self.calculate_Invested_Capital()
+        previous_ic = 0
+        avrg_ic = (current_ic + previous_ic) / 2
+        return avrg_ic
+
+
+    
+    def calculate_ROIC(self) -> float:
         '''
         Docstring for calculate_ROIC
         Return on invested Capital (ROIC) = NOPAT / average invested capital
