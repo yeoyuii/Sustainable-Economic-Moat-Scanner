@@ -6,8 +6,14 @@ class data_collector():
         self.ticker = ticker
         stock = yf.Ticker(self.ticker)
         self.income_stmt = stock.get_income_stmt() 
+        self.balance_sheet = stock.balance_sheet
         self.effective_tax_rate = 0
         self.info = stock.info
+        self.avrg_ic = None
+        self.calc_NOPAT = None
+    
+    def __repr__(self):
+        return f"data collector: {self.ticker}"
 
     def data_collector(self) -> None:
         '''
@@ -30,6 +36,7 @@ class data_collector():
         '''
 
         operating_income = self.income_stmt.loc['OperatingIncome']
+        
 
         # iloc[0] = Most recent period (TTM for annual, latest quarter for quarterly)
         most_recent_op_income = operating_income.iloc[0]
@@ -47,29 +54,29 @@ class data_collector():
         NOPAT stands for Net Operating Profit After Tax
         NOPAT = EBIT x (1 - Tax rate)
         '''
+        if self.effective_tax_rate == 0:
+            self.calculate_TaxRate()
         getting_EBIT = self.income_stmt.loc['EBIT']
         calc_EBIT = self.income_stmt.loc['EBIT'].iloc[0]
-        calc_NOPAT = calc_EBIT * (1 - self.effective_tax_rate)
-        return calc_NOPAT
-    
+        self.calc_NOPAT = calc_EBIT * (1 - self.effective_tax_rate)
+        return self.calc_NOPAT
+
     def calculate_avrg_invested_cap(self) -> float:
         '''
         Docstring for calculate_avrg_invested_cap
         Returns Average Invested Capital as a float
         '''
-        current_ic = self.calculate_Invested_Capital()
-        previous_ic = 0
-        avrg_ic = (current_ic + previous_ic) / 2
-        return avrg_ic
-
-
+        current_ic = self.calculate_Invested_Capital(period=0)
+        previous_ic = self.calculate_Invested_Capital(period=1)
+        self.avrg_ic = (current_ic + previous_ic) / 2
+        return self.avrg_ic
     
     def calculate_ROIC(self) -> float:
         '''
         Docstring for calculate_ROIC
         Return on invested Capital (ROIC) = NOPAT / average invested capital
         '''
-        pass
+        return self.calc_NOPAT / self.avrg_ic
 
 
 
