@@ -1,0 +1,46 @@
+class GreenMeasure:
+    def __init__(self, company):
+        self.company = company
+
+    def retrieve_data(self):
+        '''
+        Docstring for retrieve_data
+        
+        retrieve data from company published ESG (environmental, social and governace) reports
+        '''
+    pass
+
+
+    
+    def calc_ghg(self):
+        '''
+        Docstring for calc_ghg
+        
+        total green house gas emission calculation
+        '''
+    pass
+
+    def measure_water_consumption(self):
+        '''
+        Docstring for measure_water_consumption
+        
+        :param self: Description
+        '''
+
+    pass
+
+    def waste_percent(self):
+        '''
+        Docstring for waste_percent
+        
+        :param self: Description
+        '''
+    pass
+
+    def renewable_energy_percent(self):
+        '''
+        Docstring for renewable_energy_percent
+        
+        :param self: Description
+        '''
+    pass
